@@ -5,10 +5,11 @@ using UnityEngine.Advertisements;
 public class AdManager : MonoBehaviour {
     [SerializeField]
     string gameID;
+    public int maxValue;
     int a;
 
     void Awake () {
-        a = Random.Range (0, 8);
+        a = Random.Range (0, maxValue);
         print ("----------------------------------------------------------------" + a);
         Advertisement.Initialize (gameID, true);
     }
