@@ -1,0 +1,56 @@
+﻿using UnityEngine;
+using System.Collections;
+using UnityEngine.Advertisements;
+
+public class AdManager : MonoBehaviour {
+    [SerializeField]
+    string gameID;
+    int a;
+
+    void Awake () {
+        a = Random.Range (0, 8);
+        print ("----------------------------------------------------------------" + a);
+        Advertisement.Initialize (gameID, true);
+    }
+
+
+    void Update () {
+        ShowAd ();
+    }
+
+    public void ShowAd (string zone = "") {
+
+        if (string.Equals (zone, ""))
+            zone = null;
+
+        ShowOptions options = new ShowOptions ();
+        options.resultCallback = AdCallbackhandler;
+
+        if (Advertisement.isReady (zone) && (Logic.gO == 1)) {
+            RandomizeAds (zone, options);
+
+        }
+    }
+
+    void AdCallbackhandler (ShowResult result) {
+        switch (result) {
+            case ShowResult.Finished:
+            Logic.gO = 3;
+            break;
+            case ShowResult.Skipped:
+            Logic.gO = 3;
+            break;
+            case ShowResult.Failed:
+            Logic.gO = 3;
+            break;
+        }
+    }
+
+  
+    public void RandomizeAds (string zone, ShowOptions options) {   
+        if (a == 1) { 
+            Advertisement.Show (zone, options);   
+        }
+    }
+
+}
